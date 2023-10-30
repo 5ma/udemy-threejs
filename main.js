@@ -14,9 +14,10 @@ camera = new THREE.PerspectiveCamera(
 );
 
 // レンダラーを追加
-renderer = new THREE.WebGL1Renderer();
+renderer = new THREE.WebGL1Renderer({
+  alpha: true // 背景色を透過させる
+});
 // レンダラーのサイズを変更：画面サイズに合わせる
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
-
 renderer.render(scene, camera);
