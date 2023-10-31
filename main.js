@@ -21,7 +21,11 @@ renderer = new THREE.WebGL1Renderer({
 });
 // レンダラーのサイズを変更：画面サイズに合わせる
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
+
+// テクスチャを追加してみよう
+let texture = new THREE.TextureLoader().load('./textures/earth.jpg');
 
 // ジオメトリ(骨格のようなもの)を作成
 let ballGeometry = new THREE.SphereGeometry(
@@ -32,7 +36,7 @@ let ballGeometry = new THREE.SphereGeometry(
 // マテリアル(材質)を作成
 // MeshPhysicalMaterialは光源を必要とするmaterial
 let ballMaterial = new THREE.MeshPhysicalMaterial({
-  color: 0xdb57ff
+  map: texture
 });
 
 // メッシュ化してみよう
