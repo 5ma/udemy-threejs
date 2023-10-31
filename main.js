@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-let scene, camera, renderer;
+let scene, camera, renderer, pointLight;
 
 // シーンを追加する
 scene = new THREE.Scene();
@@ -35,6 +35,21 @@ let ballMaterial = new THREE.MeshPhysicalMaterial();
 let ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
 // 作成したメッシュをシーン上に追加する
 scene.add(ballMesh);
+
+// 平行光源を追加
+// 第一引数は光の色、第二引数は光の強さ
+let directionalLight = new THREE.DirectionalLight(0xffffff, 2); // 0xというのはこれから16新数を書きますよということを表す
+directionalLight.position.set(1, 1, 1);
+scene.add(directionalLight);
+
+// ポイント光源を追加してみよう
+pointLight = new THREE.PointLight(0xffffff, 1000);
+pointLight.position.set(-100, -100, 50)
+scene.add(pointLight);
+
+// ポイント光源がどこにあるのかを特定する
+let pointLightHelper = new THREE.PointLightHelper(pointLight, 10); // 第二引数はpointLightHelperの大きさを数値で指定
+scene.add(pointLightHelper)
 
 // レンダリングしてみよう
 renderer.render(scene, camera);
