@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from "three";
 
 let scene, camera, renderer, pointLight;
 
@@ -16,7 +16,7 @@ camera.position.set(0, 0, +500);
 
 // レンダラーを追加
 renderer = new THREE.WebGL1Renderer({
-  alpha: true // 背景色を透過させる
+  alpha: true, // 背景色を透過させる
 });
 // レンダラーのサイズを変更：画面サイズに合わせる
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -25,12 +25,15 @@ document.body.appendChild(renderer.domElement);
 // ジオメトリ(骨格のようなもの)を作成
 let ballGeometry = new THREE.SphereGeometry(
   100, // 球体の半径
-  64,  // widthSegments（ポリゴンの数、増やせば増やすほど球体に近づく）
-  32   // heightSegment（ポリゴンの数、増やせば増やすほど球体に近づく）
+  64, // widthSegments（ポリゴンの数、増やせば増やすほど球体に近づく）
+  32 // heightSegment（ポリゴンの数、増やせば増やすほど球体に近づく）
 );
 // マテリアル(材質)を作成
 // MeshPhysicalMaterialは光源を必要とするmaterial
-let ballMaterial = new THREE.MeshPhysicalMaterial();
+let ballMaterial = new THREE.MeshPhysicalMaterial({
+  color: 0xdb57ff
+});
+
 // メッシュ化してみよう
 let ballMesh = new THREE.Mesh(ballGeometry, ballMaterial);
 // 作成したメッシュをシーン上に追加する
@@ -42,14 +45,33 @@ let directionalLight = new THREE.DirectionalLight(0xffffff, 2); // 0xという�
 directionalLight.position.set(1, 1, 1);
 scene.add(directionalLight);
 
+// ディレクショナルヘルパーを使って平行光源がどこにあるのかを特定する
+let directionalLightHelper = new THREE.DirectionalLightHelper(
+  directionalLight,
+  100
+);
+scene.add(directionalLightHelper);
+
 // ポイント光源を追加してみよう
-pointLight = new THREE.PointLight(0xffffff, 1000);
-pointLight.position.set(-100, -100, 50)
+pointLight = new THREE.PointLight(0x646cff, 10000);
+pointLight.position.set(-100, -100, 50);
 scene.add(pointLight);
 
 // ポイント光源がどこにあるのかを特定する
 let pointLightHelper = new THREE.PointLightHelper(pointLight, 10); // 第二引数はpointLightHelperの大きさを数値で指定
-scene.add(pointLightHelper)
+scene.add(pointLightHelper);
 
-// レンダリングしてみよう
-renderer.render(scene, camera);
+function animate() {
+  // ポイント光源を球の周りを巡回させる
+  pointLight.position.set(
+    150 * Math.sin(Date.now() / 500),
+    150 * Math.sin(Date.now() / 1000),
+    150 * Math.cos(Date.now() / 500),
+  );
+
+  // レンダリングしてみよう
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}
+
+animate();
