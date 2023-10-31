@@ -1,6 +1,7 @@
 import * as THREE from "three";
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
-let scene, camera, renderer, pointLight;
+let scene, camera, renderer, pointLight, controls;
 
 // シーンを追加する
 scene = new THREE.Scene();
@@ -60,6 +61,9 @@ scene.add(pointLight);
 // ポイント光源がどこにあるのかを特定する
 let pointLightHelper = new THREE.PointLightHelper(pointLight, 10); // 第二引数はpointLightHelperの大きさを数値で指定
 scene.add(pointLightHelper);
+
+// マウス操作ができるようにしよう
+controls = new OrbitControls(camera, renderer.domElement);
 
 function animate() {
   // ポイント光源を球の周りを巡回させる
