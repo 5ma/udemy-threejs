@@ -1,6 +1,8 @@
 import * as THREE from "three";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
+import earthTexture from './textures/earth.jpg';
+
 let scene, camera, renderer, pointLight, controls;
 
 // シーンを追加する
@@ -25,7 +27,7 @@ renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
 
 // テクスチャを追加してみよう
-let texture = new THREE.TextureLoader().load('./textures/earth.jpg');
+let texture = new THREE.TextureLoader().load(earthTexture);
 
 // ジオメトリ(骨格のようなもの)を作成
 let ballGeometry = new THREE.SphereGeometry(
