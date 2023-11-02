@@ -23,8 +23,15 @@ document.body.appendChild(renderer.domElement);
  * ジオメトリを作ってみよう。
  **/
 
+const boxGeometry = new THREE.BoxGeometry(1,1,1);
+
 //マテリアル
-const material = new THREE.MeshNormalMaterial();
+const material = new THREE.MeshNormalMaterial({
+  wireframe: true
+});
+
+const box = new THREE.Mesh(boxGeometry, material);
+scene.add(box);
 
 //ライト
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
