@@ -23,15 +23,34 @@ document.body.appendChild(renderer.domElement);
  * ジオメトリを作ってみよう。
  **/
 
-const boxGeometry = new THREE.BoxGeometry(1,1,1);
+// boxジオメトリを作る
+const boxGeometry = new THREE.BoxGeometry(1,1,1); // width, height, depth(奥行き)
+// 第四引数以降はどれだけMeshを細かく区切るとかの設定ができるが、細かく区切れば区切るほど計算量が増えて負荷がかかってしまう
+// 球体ジオメトリ
+const sphereGeometry = new THREE.SphereGeometry(0.5, 32, 16);
+// 平面ジオメトリ
+const planeGeometry = new THREE.PlaneGeometry(10,10);
+// ドーナツ型のジオメトリ
+const torusGeometry = new THREE.TorusGeometry(0.5, 0.2, 20, 60, Math.PI * 2); // ドーナツ全体の半径、チューブの半径
 
 //マテリアル
 const material = new THREE.MeshNormalMaterial({
-  wireframe: true
+  // wireframe: true // 構造の枠組みを可視化する(Meshの荒さとか細かさを見れる)
 });
 
 const box = new THREE.Mesh(boxGeometry, material);
-scene.add(box);
+const sphere = new THREE.Mesh(sphereGeometry, material);
+const plane = new THREE.Mesh(planeGeometry, material);
+const torus = new THREE.Mesh(torusGeometry, material);
+
+sphere.position.x = 1.5;
+// rotateX(-90deg)させているのと一緒。0.5は、90度が180度の1/2なので0.5となる
+// マイナスをつけないと見えないので、-90degにする
+plane.rotation.x = -Math.PI * 0.5;
+// boxの真ん中を貫通してしまっているので、boxの下に敷くような形で移動させる
+plane.position.y = -0.5;
+torus.position.x = -1.5;
+scene.add(box, sphere, plane, torus);
 
 //ライト
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
