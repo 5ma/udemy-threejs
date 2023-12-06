@@ -27,6 +27,7 @@ function init() {
   // レンダラーのサイズを変更：画面サイズに合わせる
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(window.devicePixelRatio);
+  // bodyに追加
   document.body.appendChild(renderer.domElement);
 
   // テクスチャを追加してみよう
@@ -51,14 +52,14 @@ function init() {
 
   // 平行光源を追加
   // 第一引数は光の色、第二引数は光の強さ
-  let directionalLight = new THREE.DirectionalLight(0xffffff, 2); // 0xというのはこれから16新数を書きますよということを表す
+  let directionalLight = new THREE.DirectionalLight(0xffffff, 3); // 0xというのはこれから16新数を書きますよということを表す
   directionalLight.position.set(1, 1, 1);
   scene.add(directionalLight);
 
   // ディレクショナルヘルパーを使って平行光源がどこにあるのかを特定する
   let directionalLightHelper = new THREE.DirectionalLightHelper(
-    directionalLight,
-    100
+    directionalLight, // light
+    100  // size
   );
   scene.add(directionalLightHelper);
 
