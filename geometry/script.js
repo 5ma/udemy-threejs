@@ -9,7 +9,7 @@ const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
-  100
+  1000
 );
 camera.position.set(1, 1, 2);
 
@@ -35,22 +35,32 @@ const torusGeometry = new THREE.TorusGeometry(0.5, 0.2, 20, 60, Math.PI * 2); //
 // バッファジオメトリ
 const bufferGeometry = new THREE.BufferGeometry();
 
-const positionArray = new Float32Array(9);
+// バッファジオメトリを使って50この三角形を作る
+const count = 50;
+// 浮動小数店の32ビットの情報しか入らない(整数も入ることができる)配列を作成、要素の数は9個になるので引数に9を渡す
+const positionArray = new Float32Array(9 * count);
 
-positionArray[0] = 0;
-positionArray[1] = 0;
-positionArray[2] = 0;
+for (let i = 0; i < count * 9; i++) {
+  console.log(positionArray[i])
+  // 中心に来て欲しいので-0.5する-1〜1の間でランダムな値になるようにする
+  positionArray[i] = (Math.random() - 0.5) * 2;
+}
 
-positionArray[3] = 0;
-positionArray[4] = 1;
-positionArray[5] = 0;
+// positionArray[0] = 0;  // x座標
+// positionArray[1] = 0;  // y座標
+// positionArray[2] = 0;  // z座標
 
-positionArray[6] = 1;
-positionArray[7] = 0;
-positionArray[8] = 0;
+// positionArray[3] = 0;
+// positionArray[4] = 1;
+// positionArray[5] = 0;
+
+// positionArray[6] = 1;
+// positionArray[7] = 0;
+// positionArray[8] = 0;
 
 console.log(positionArray);
 const positionAttribute = new THREE.BufferAttribute(positionArray, 3);
+// 三角形の頂点座標位置なので、第一引数にはpositionと言う名前で設定
 bufferGeometry.setAttribute('position', positionAttribute);
 
 const bufferMaterial = new THREE.MeshBasicMaterial({

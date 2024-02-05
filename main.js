@@ -18,7 +18,7 @@ function init() {
     0.1, // 開始距離
     1000 // 終了距離
   );
-  camera.position.set(0, 0, +500);
+  camera.position.set(0, 0, 500);
 
   // レンダラーを追加
   renderer = new THREE.WebGL1Renderer({
